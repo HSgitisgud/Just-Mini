@@ -9,6 +9,7 @@ public class PlayerPanel extends JPanel {
     private Player player;
     private int tileSize;
     private Image playerImage;
+    private Image pandaImage;
 
     public PlayerPanel(Player player, int tileSize) {
         this.player = player;

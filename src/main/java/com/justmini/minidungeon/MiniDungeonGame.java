@@ -92,7 +92,7 @@ public class MiniDungeonGame extends JFrame {
         // rightPanel.add(Box.createHorizontalStrut(60)); // 왜 스탯이 움직이는데 미니맵이 움직이라고!!!
         // 박스 레이아웃 구성이 대체 어떻게 돼있는 거야
 
-        miniMapLabel = new JLabel("map");
+        miniMapLabel = new JLabel("Map");
         rightPanel.add(miniMapLabel);
 
         miniMapPanel = new MiniMapPanel(null);

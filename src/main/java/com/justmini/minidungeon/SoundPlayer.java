@@ -24,7 +24,7 @@ public class SoundPlayer {
                 // 오디오 입력 스트림 생성
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
 
-                // Clip 생성 및 열기
+                // clip 생성 및 열기
                 clip = AudioSystem.getClip();
                 clip.open(audioInputStream);
 
@@ -43,4 +43,3 @@ public class SoundPlayer {
         }
     }
 }
-

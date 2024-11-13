@@ -27,6 +27,9 @@ public class MiniMapPanel extends JPanel {
         boolean[] visitedRooms = gameLogic.getVisitedRooms();
         Room[] rooms = gameLogic.getMap().getRooms();
 
+        // 현재 방 가져오기
+        Room currentRoom = gameLogic.getMap().getCurrentRoom();
+
         int cellSize = 40;
         for (int i = 0; i < rooms.length; i++) {
             int x = (i % 3) * cellSize;
@@ -44,9 +47,19 @@ public class MiniMapPanel extends JPanel {
                 g.setColor(Color.GRAY); // 방문하지 않은 방
             }
 
+            // 방 그리기
             g.fillRect(x, y, cellSize, cellSize);
             g.setColor(Color.BLACK);
             g.drawRect(x, y, cellSize, cellSize);
+
+            // 현재 방에 빨간 동그라미 표시
+            if (room == currentRoom) {
+                g.setColor(Color.RED);
+                int circleSize = cellSize / 2;
+                int circleX = x + (cellSize - circleSize) / 2;
+                int circleY = y + (cellSize - circleSize) / 2;
+                g.fillOval(circleX, circleY, circleSize, circleSize);
+            }
         }
     }
 }

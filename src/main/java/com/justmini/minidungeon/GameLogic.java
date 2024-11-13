@@ -241,6 +241,7 @@ public class GameLogic {
         if (monster.getHp() <= 0) {
             currentRoom.removeMonster(monster);
             allMonsters.remove(monster); // 전체 몬스터 리스트에서 제거. 이거 때문에 익셉션 나오는 거 같은데 어떻게 고쳐야 하냐... 하 몰라 되면 그만이야
+            // 몬스터 죽는 거랑 동시에 이동 일어나면 익셉션 일어나는듯?
             mainFrame.updateCombatLog("You've killed the " + monster.getName() + "!");
             int previousLevel = player.getLevel();
             player.addExp(monster.getExp());
