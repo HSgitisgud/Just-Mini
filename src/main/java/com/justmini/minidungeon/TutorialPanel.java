@@ -53,7 +53,7 @@ public class TutorialPanel extends JPanel {
         // 이미지와 텍스트 로드
         for (int i = 0; i < totalSlides; i++) {
             // 이미지 로드
-            String imagePath = "/images/tutorial/tutorial" + (i + 1) + ".png";
+            String imagePath = "/images/minidungeon/tutorial/tutorial" + (i + 1) + ".png";
             URL imageUrl = getClass().getResource(imagePath);
             if (imageUrl != null) {
                 tutorialImages[i] = new ImageIcon(imageUrl).getImage();

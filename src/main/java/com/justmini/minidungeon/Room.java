@@ -31,7 +31,7 @@ public class Room {
 //        Tile[][] tiles = new Tile[verticalTiles][horizontalTiles];
 //        for (int y = 0; y < verticalTiles; y++) {
 //            for (int x = 0; x < horizontalTiles; x++) {
-//                tiles[y][x] = new Tile(x, y, true, "/images/grass_tile.png");
+//                tiles[y][x] = new Tile(x, y, true, "/images/minidungeon/grass_tile.png");
 //            }
 //        }
         Tile[][] tiles = new Tile[verticalTiles][horizontalTiles];
@@ -46,27 +46,27 @@ public class Room {
 
                 // 코너 타일 처리
                 if (isTopEdge && isLeftEdge) {
-                    imagePath = "/images/grass_top_left.png";
+                    imagePath = "/images/minidungeon/grass_top_left.png";
                 } else if (isTopEdge && isRightEdge) {
-                    imagePath = "/images/grass_top_right.png";
+                    imagePath = "/images/minidungeon/grass_top_right.png";
                 } else if (isBottomEdge && isLeftEdge) {
-                    imagePath = "/images/grass_bottom_left.png";
+                    imagePath = "/images/minidungeon/grass_bottom_left.png";
                 } else if (isBottomEdge && isRightEdge) {
-                    imagePath = "/images/grass_bottom_right.png";
+                    imagePath = "/images/minidungeon/grass_bottom_right.png";
                 }
                 // 가장자리 타일 처리
                 else if (isTopEdge) {
-                    imagePath = "/images/grass_top.png";
+                    imagePath = "/images/minidungeon/grass_top.png";
                 } else if (isBottomEdge) {
-                    imagePath = "/images/grass_bottom.png";
+                    imagePath = "/images/minidungeon/grass_bottom.png";
                 } else if (isLeftEdge) {
-                    imagePath = "/images/grass_left.png";
+                    imagePath = "/images/minidungeon/grass_left.png";
                 } else if (isRightEdge) {
-                    imagePath = "/images/grass_right.png";
+                    imagePath = "/images/minidungeon/grass_right.png";
                 }
                 // 내부 타일
                 else {
-                    imagePath = "/images/dirt_tile.png";
+                    imagePath = "/images/minidungeon/dirt_tile.png";
                 }
 
                 tiles[y][x] = new Tile(x, y, true, imagePath);

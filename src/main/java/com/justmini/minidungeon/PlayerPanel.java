@@ -20,7 +20,7 @@ public class PlayerPanel extends JPanel {
 
         // 플레이어 이미지 로드
         try {
-            URL imageUrl = getClass().getResource("/images/player.png");
+            URL imageUrl = getClass().getResource("/images/minidungeon/player.png");
             if (imageUrl != null) {
                 ImageIcon icon = new ImageIcon(imageUrl);
                 playerImage = icon.getImage().getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
