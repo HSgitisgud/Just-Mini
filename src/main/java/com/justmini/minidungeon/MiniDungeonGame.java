@@ -1,5 +1,7 @@
 package com.justmini.minidungeon;
 
+import com.justmini.main.JustMiniMain;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -19,6 +21,7 @@ public class MiniDungeonGame extends JFrame {
     private MiniMapPanel miniMapPanel; // 3x3 그리드 맵
     private JLabel miniMapLabel;
     private TutorialPanel tutorialPanel;
+    private KeyAdapter keyAdapter;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -27,8 +30,11 @@ public class MiniDungeonGame extends JFrame {
     }
 
     public MiniDungeonGame() {
+        System.out.println("MiniDungeonGame initializing...");
         // 튜토리얼 UI 시작
         initTutorialUI();
+        setVisible(true);
+        System.out.println("MiniDungeonGame initialized.");
     }
 
     private void initTutorialUI() {
@@ -39,12 +45,24 @@ public class MiniDungeonGame extends JFrame {
 
         setTitle("MiniDungeon");
         setSize(1350, 705);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // 프레임 포커스 설정
         setFocusable(true);
         requestFocusInWindow();
+
+        // 창 닫기 이벤트 처리 추가
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // 현재 게임 창 닫기
+                dispose();
+
+                // 메인 화면 표시
+                new JustMiniMain();
+            }
+        });
     }
 
     private void initGameUI() {
@@ -102,10 +120,22 @@ public class MiniDungeonGame extends JFrame {
         add(rightPanel, BorderLayout.EAST);
 
         setTitle("MiniDungeon");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1350, 705);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        // 창 닫기 이벤트 처리 추가
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // 현재 게임 창 닫기
+                dispose();
+
+                // 메인 화면 표시
+                new JustMiniMain();
+            }
+        });
     }
 
     public void startGame() {
@@ -134,14 +164,22 @@ public class MiniDungeonGame extends JFrame {
         repaint();
 
         // 게임 키 이벤트 리스너 추가
-        addKeyListener(new KeyAdapter() {
+        keyAdapter = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 gameLogic.handlePlayerInput(e.getKeyCode());
             }
-        });
+        };
+        addKeyListener(keyAdapter);
         setFocusable(true);
         requestFocusInWindow();
+    }
+
+    public void stopGame() {
+        if (keyAdapter != null) {
+            removeKeyListener(keyAdapter);
+            keyAdapter = null;
+        }
     }
 
     // UI 업데이트 메서드들

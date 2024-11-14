@@ -1,5 +1,7 @@
 package com.justmini.minidungeon;
 
+import com.justmini.main.JustMiniMain;
+
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ public class GameLogic {
     private MiniDungeonGame mainFrame;
     private Room currentRoom;
     private List<Monster> allMonsters; // 모든 몬스터를 저장하는 리스트
+    private boolean gameRunning = true; // 게임 실행 상태를 나타내는 플래그
 
     public GameLogic(Player player, MiniDungeonGame mainFrame) {
         this.player = player;
@@ -33,29 +36,17 @@ public class GameLogic {
         }
     }
 
-//    public void startGame() {
-//        // 초기 설정
-//        player.setCurrentRoom(currentRoom);
-//        mainFrame.updateRoomName(currentRoom.getName());
-//        mainFrame.updatePlayerStats();
-//        mainFrame.updateItemList();
-//
-//        // 게임 화면 설정
-//        mainFrame.setGamePanel(currentRoom.getRoomPanel());
-//
-//        // 키 리스너 설정
-//        mainFrame.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyPressed(KeyEvent e) {
-//                handlePlayerInput(e.getKeyCode());
-//            }
-//        });
-//
-//        mainFrame.setFocusable(true);
-//        mainFrame.requestFocusInWindow();
-//    }
+    // 게임 종료 메서드
+    public void stopGame() {
+        gameRunning = false; // 게임 실행 상태를 false로 설정
+
+        // 타이머나 스레드가 있다면 여기서 종료 처리
+        // 예를 들어, Timer 객체가 있다면 timer.stop(); 호출
+    }
 
     public void handlePlayerInput(int keyCode) {
+        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+
         Direction direction = null;
         switch (keyCode) {
             case KeyEvent.VK_UP:
@@ -84,6 +75,8 @@ public class GameLogic {
     }
 
     public void movePlayer(Direction direction) {
+        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+
         int newX = player.getX() + direction.dx;
         int newY = player.getY() + direction.dy;
 
@@ -111,6 +104,8 @@ public class GameLogic {
     }
 
     public void moveMonsters() {
+        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+
         List<Monster> monsters = currentRoom.getMonsters();
 
         for (Monster monster : monsters) {
@@ -169,6 +164,8 @@ public class GameLogic {
     }
 
     private void useItem(int index) {
+        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+
         List<Item> items = player.getBag().getItems();
         if (index >= 0 && index < items.size()) {
             Item item = items.get(index);
@@ -204,6 +201,8 @@ public class GameLogic {
     }
 
     private void checkForEvents() {
+        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+
         // 아이템 습득
         Item item = currentRoom.getItemAt(player.getX(), player.getY());
         if (item != null) {
@@ -217,18 +216,14 @@ public class GameLogic {
                 SoundPlayer.playSound("/sounds/negative.wav");
             }
         }
-
-        // 몬스터와 전투
-        // Monster monster = currentRoom.getMonsterAt(player.getX(), player.getY());
-        // if (monster != null) {
-        //     battle(monster);
-        // }
     }
 
     private void battle(Monster monster) {
+        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+
         SoundPlayer.playSound("/sounds/battle_sound.wav");
 
-        // 전투 로직 구현 (임시)
+        // 전투 로직 구현
         int damageToMonster = Math.max(0, player.getAtk() - monster.getDef());
         int damageToPlayer = Math.max(0, monster.getAtk() - player.getDef());
 
@@ -240,8 +235,7 @@ public class GameLogic {
 
         if (monster.getHp() <= 0) {
             currentRoom.removeMonster(monster);
-            allMonsters.remove(monster); // 전체 몬스터 리스트에서 제거. 이거 때문에 익셉션 나오는 거 같은데 어떻게 고쳐야 하냐... 하 몰라 되면 그만이야
-            // 몬스터 죽는 거랑 동시에 이동 일어나면 익셉션 일어나는듯?
+            allMonsters.remove(monster);
             mainFrame.updateCombatLog("You've killed the " + monster.getName() + "!");
             int previousLevel = player.getLevel();
             player.addExp(monster.getExp());
@@ -266,20 +260,40 @@ public class GameLogic {
             // 게임 종료 처리
             SoundPlayer.playSound("/sounds/game_over.wav");
             JOptionPane.showMessageDialog(mainFrame, "Game Over!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+
+            // 게임 로직 종료
+            stopGame();
+
+            // 게임 프레임에서 이벤트 리스너 제거
+            mainFrame.stopGame();
+
+            // 현재 게임 창 닫기
+            mainFrame.dispose();
+            // 메인 화면 표시
+            new JustMiniMain();
         }
     }
 
     private void gameWon() {
+        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+
+        // 게임 로직 종료
+        stopGame();
+
         SoundPlayer.playSound("/sounds/game_won.wav");
 
         mainFrame.updateCombatLog("Congratulations! Revenge has been achieved on all goblins!");
         // 게임 종료 처리
         JOptionPane.showMessageDialog(mainFrame, "Congratulations! Revenge has been achieved on all goblins!", "Game Won", JOptionPane.INFORMATION_MESSAGE);
-        System.exit(0);
+        // 현재 게임 창 닫기
+        mainFrame.dispose();
+        // 메인 화면 표시
+        new JustMiniMain();
     }
 
     private void moveToNextRoom(Direction direction) {
+        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+
         if (map.moveToAdjacentRoom(direction)) {
             currentRoom = map.getCurrentRoom();
             player.setCurrentRoom(currentRoom);

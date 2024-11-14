@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import com.justmini.main.JustMiniMain;
 
 public class MiniDodge extends JFrame implements ActionListener {
 	private int playerX, playerY; // 플레이어 위치 변수
@@ -21,9 +22,9 @@ public class MiniDodge extends JFrame implements ActionListener {
 	private PatternManager patternManager;
 
 	public MiniDodge() {
-		setTitle("Bamboo Master - Shuriken Dodge");
+		setTitle("Mini Dodge");
 		setSize(600, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLayout(null);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -39,7 +40,7 @@ public class MiniDodge extends JFrame implements ActionListener {
 		add(gamePanel);
 
 		// 플레이어 이미지 로드
-		playerImage = new ImageIcon(getClass().getResource("/images/minidodge/player.png")).getImage();
+		playerImage = new ImageIcon(getClass().getResource("/images/minidodge/Player.png")).getImage();
 
 		timer = new Timer(1000 / 60, this);
 
@@ -77,6 +78,18 @@ public class MiniDodge extends JFrame implements ActionListener {
 		setVisible(true);
 
 		startTime = System.currentTimeMillis(); // 게임 시작 시간 기록
+
+		// 창 닫기 이벤트 처리 추가
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// 현재 게임 창 닫기
+				dispose();
+
+				// 메인 화면 표시
+				new JustMiniMain();
+			}
+		});
 	}
 
 	// 게임 설명 패널 생성 메서드
@@ -85,13 +98,15 @@ public class MiniDodge extends JFrame implements ActionListener {
 		panel.setBounds(0, 0, 600, 600);
 		panel.setLayout(null);
 
-		JLabel instructionLabel = new JLabel("<html>게임 설명: 수리검을 피하면서 최대한 오래 생존하세요!<br>방향키로 플레이어를 조작합니다.</html>",
+		JLabel instructionLabel = new JLabel("<html>Game Description: <br>Survive as long as " +
+				"possible while avoiding shurikens! " +
+				"<br>Use the arrow keys to control the player.</html>",
 				SwingConstants.CENTER);
 		instructionLabel.setBounds(50, 100, 500, 100);
 		instructionLabel.setFont(new Font("Arial", Font.PLAIN, 18));
 		panel.add(instructionLabel);
 
-		startButton = new JButton("게임 시작");
+		startButton = new JButton("Game Start");
 		startButton.setBounds(250, 300, 100, 50);
 		startButton.addActionListener(e -> startGame());
 		panel.add(startButton);
@@ -160,6 +175,7 @@ public class MiniDodge extends JFrame implements ActionListener {
 		timer.stop(); // 타이머 중지
 		int finalScore = (int) ((currentTime - startTime) / 1000.0 * 100);
 		gamePanel.displayGameOver(finalScore); // 초기 화면 설명 패널 표시
+
 	}
 
 	public static void main(String[] args) {
@@ -187,7 +203,7 @@ public class MiniDodge extends JFrame implements ActionListener {
 			scoreLabel.setVisible(false); // 점수 표시
 			add(scoreLabel);
 
-			retryButton = new JButton("다시하기");
+			retryButton = new JButton("Restart");
 			retryButton.setBounds(250, 300, 100, 50);
 			retryButton.setVisible(false); // 게임 오버 시 나타나는 버튼
 			retryButton.addActionListener(e -> startGame()); // 다시 시작 클릭 시 startGame 호출

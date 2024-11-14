@@ -32,11 +32,12 @@ public class SoundPlayer {
                 soundCache.put(soundFilePath, clip);
             }
 
-            // 클립 재생
-            if (clip.isRunning()) {
-                clip.stop();
-            }
-            clip.setFramePosition(0);
+            // 클립 재생인데 일단 isRunning 체크하는거 빼서 겹칠 수 있게 해봄.
+            // battle effect 사운드가 자주 씹히는데 이래도 해결이 안되네
+            //if (clip.isRunning()) {
+            //    clip.stop();
+            //}
+            clip.setFramePosition(5);
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
