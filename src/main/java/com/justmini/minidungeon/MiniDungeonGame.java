@@ -30,11 +30,12 @@ public class MiniDungeonGame extends JFrame {
     }
 
     public MiniDungeonGame() {
-        System.out.println("MiniDungeonGame initializing...");
+        System.out.println("Initializing MiniDungeonGame...");
         // 튜토리얼 UI 시작
         initTutorialUI();
         setVisible(true);
         System.out.println("MiniDungeonGame initialized.");
+        System.out.println();
     }
 
     private void initTutorialUI() {
@@ -43,10 +44,11 @@ public class MiniDungeonGame extends JFrame {
         tutorialPanel.setPreferredSize(new Dimension(1350, 705));
         setContentPane(tutorialPanel); // Content Pane을 튜토리얼 패널로 설정
 
-        setTitle("MiniDungeon");
+        setTitle("Mini Dungeon");
         setSize(1350, 705);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         // 프레임 포커스 설정
         setFocusable(true);
@@ -119,23 +121,23 @@ public class MiniDungeonGame extends JFrame {
 
         add(rightPanel, BorderLayout.EAST);
 
-        setTitle("MiniDungeon");
+        setTitle("Mini Dungeon");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1350, 705);
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // 창 닫기 이벤트 처리 추가
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                // 현재 게임 창 닫기
-                dispose();
-
-                // 메인 화면 표시
-                new JustMiniMain();
-            }
-        });
+        // 창 닫기 이벤트 처리 추가... 인데 initTuto에만 넣어도 되는듯? startGame()에서 튜토패널 지운다 해도 이벤트 리스너 스레드는 살아있나보다
+        //addWindowListener(new WindowAdapter() {
+        //    @Override
+        //    public void windowClosing(WindowEvent e) {
+        //        // 현재 게임 창 닫기
+        //        dispose();
+        //
+        //        // 메인 화면 표시
+        //        new JustMiniMain();
+        //    }
+        //});
     }
 
     public void startGame() {

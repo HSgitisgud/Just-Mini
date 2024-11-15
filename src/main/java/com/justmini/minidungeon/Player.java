@@ -14,10 +14,10 @@ public class Player {
         level = 1;
         exp = 0;
         expToLevelUp = 20;
-        maxHp = 100;
+        maxHp = 690;
         hp = maxHp;
-        atk = 8;
-        def = 4;
+        atk = 69;
+        def = 38;
         bag = new Bag();
         x = 0;
         y = 4;
@@ -68,8 +68,9 @@ public class Player {
     private void levelUp() {
         level++;
         expToLevelUp *= 2; // 다음 레벨 업까지 필요한 경험치 두 배로 증가
-        maxHp += 10;
-        atk += 2;
-        def += 2;
+        maxHp += 98;
+        hp = maxHp;
+        atk += 10;
+        def += 8;
     }
 }

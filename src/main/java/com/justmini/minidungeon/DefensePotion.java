@@ -6,7 +6,7 @@ public class DefensePotion extends Item {
 
     public DefensePotion(int x, int y) {
         super(x, y, "defense potion", "/images/minidungeon/defense_potion.png");
-        this.defenseBoost = 2;
+        this.defenseBoost = 8;
     }
 
     public int getDefenseBoost() {

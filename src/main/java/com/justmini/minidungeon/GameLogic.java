@@ -36,7 +36,7 @@ public class GameLogic {
         }
     }
 
-    // 게임 종료 메서드
+    // 게임 종료 메소드
     public void stopGame() {
         gameRunning = false; // 게임 실행 상태를 false로 설정
 
@@ -45,7 +45,7 @@ public class GameLogic {
     }
 
     public void handlePlayerInput(int keyCode) {
-        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+        if (!gameRunning) return; // 게임이 종료되었으면 메소드 종료
 
         Direction direction = null;
         switch (keyCode) {
@@ -67,7 +67,7 @@ public class GameLogic {
                     int index = keyCode - KeyEvent.VK_0;
                     useItem(index);
                 }
-                return; // 방향 이동이 아니므로 메서드 종료
+                return; // 방향 이동이 아니므로 메소드 종료
         }
         if (direction != null) {
             movePlayer(direction);
@@ -75,7 +75,7 @@ public class GameLogic {
     }
 
     public void movePlayer(Direction direction) {
-        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+        if (!gameRunning) return; // 게임이 종료되었으면 메소드 종료
 
         int newX = player.getX() + direction.dx;
         int newY = player.getY() + direction.dy;
@@ -85,6 +85,7 @@ public class GameLogic {
             Monster monster = currentRoom.getMonsterAt(newX, newY);
             if (monster != null) {
                 // 몬스터가 있으면 이동하지 않고 전투 발생
+                mainFrame.updateCombatLog("You attacked the monster!");
                 battle(monster);
             } else {
                 // 몬스터가 없으면 이동
@@ -104,7 +105,7 @@ public class GameLogic {
     }
 
     public void moveMonsters() {
-        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+        if (!gameRunning) return; // 게임이 종료되었으면 메소드 종료
 
         List<Monster> monsters = currentRoom.getMonsters();
 
@@ -143,6 +144,7 @@ public class GameLogic {
                 }
                 // 플레이어 위치에 도달한 경우 전투 처리
                 else if (isPlayerPosition(newX, newY)) {
+                    mainFrame.updateCombatLog("You are attacked by the monster!");
                     battle(monster);
                 }
             }
@@ -164,7 +166,7 @@ public class GameLogic {
     }
 
     private void useItem(int index) {
-        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+        if (!gameRunning) return; // 게임이 종료되었으면 메소드 종료
 
         List<Item> items = player.getBag().getItems();
         if (index >= 0 && index < items.size()) {
@@ -201,7 +203,7 @@ public class GameLogic {
     }
 
     private void checkForEvents() {
-        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+        if (!gameRunning) return; // 게임이 종료되었으면 메소드 종료
 
         // 아이템 습득
         Item item = currentRoom.getItemAt(player.getX(), player.getY());
@@ -219,19 +221,22 @@ public class GameLogic {
     }
 
     private void battle(Monster monster) {
-        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+        if (!gameRunning) return; // 게임이 종료되었으면 메소드 종료
 
-        SoundPlayer.playSound("/sounds/battle_sound.wav");
-
-        // 전투 로직 구현
-        int damageToMonster = Math.max(0, player.getAtk() - monster.getDef());
-        int damageToPlayer = Math.max(0, monster.getAtk() - player.getDef());
+        // 전투 로직 구현. 롤 방식으로 방어력 계산 바꿔봄. 11/15
+        int damageToMonster = Math.max(0, player.getAtk() * (1 - (monster.getDef() / (100 + monster.getDef()))));
+        int damageToPlayer = Math.max(0, monster.getAtk() * (1 - (player.getDef() / (100 + player.getDef()))));
+        // 다 좋은데 밸런스 잡기가 너무 어렵네 기존 (atk - def) 방식은 def 망겜이 되고, 롤 방식은 def가 큰 의미를 가지지 못하고...
+        // 일단 롤 방식이니깐 대충 플레이어 공방체를 가렌 1렙 능력치로 설정해보면 좋을듯, 적은 정글몹 능력치로 설정해보고
 
         monster.setHp(monster.getHp() - damageToMonster);
         player.setHp(player.getHp() - damageToPlayer);
 
-        mainFrame.updateCombatLog("Player deals " + damageToMonster + " damage " + "to a " + monster.getName());
+        mainFrame.updateCombatLog("Player deals " + damageToMonster + " damage " + "to a " + monster.getName()
+                + ". Now " + monster.getName() + " has " + monster.getHp() + " HP");
         mainFrame.updateCombatLog("The " + monster.getName() + " deals " + damageToPlayer + " damage to the player");
+
+        SoundPlayer.playSound("/sounds/battle_sound.wav");
 
         if (monster.getHp() <= 0) {
             currentRoom.removeMonster(monster);
@@ -275,7 +280,7 @@ public class GameLogic {
     }
 
     private void gameWon() {
-        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+        if (!gameRunning) return; // 게임이 종료되었으면 메소드 종료
 
         // 게임 로직 종료
         stopGame();
@@ -292,7 +297,7 @@ public class GameLogic {
     }
 
     private void moveToNextRoom(Direction direction) {
-        if (!gameRunning) return; // 게임이 종료되었으면 메서드 종료
+        if (!gameRunning) return; // 게임이 종료되었으면 메소드 종료
 
         if (map.moveToAdjacentRoom(direction)) {
             currentRoom = map.getCurrentRoom();

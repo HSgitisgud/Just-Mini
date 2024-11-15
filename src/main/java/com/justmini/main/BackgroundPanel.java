@@ -8,7 +8,7 @@ class BackgroundPanel extends JPanel {
 
     public BackgroundPanel() {
         // 배경 이미지 로드
-        backgroundImage = new ImageIcon(getClass().getResource("/images/background/sky_background.png")).getImage();
+        backgroundImage = new ImageIcon(getClass().getResource("/images/mainmenu/spare_background.png")).getImage();
     }
 
     @Override

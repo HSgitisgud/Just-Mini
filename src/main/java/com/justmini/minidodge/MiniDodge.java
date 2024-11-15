@@ -11,9 +11,11 @@ public class MiniDodge extends JFrame implements ActionListener {
 	private Timer timer;
 	private ArrayList<Shuriken> shurikens;
 	private boolean gameOver = false;
+	private boolean gameStarted = false;
 	private long startTime;
 
 	private Image playerImage;
+	private Image instructionImage;
 	private boolean movingUp = false, movingDown = false, movingLeft = false, movingRight = false;
 
 	private JButton startButton;
@@ -22,6 +24,7 @@ public class MiniDodge extends JFrame implements ActionListener {
 	private PatternManager patternManager;
 
 	public MiniDodge() {
+		System.out.println("Initializing MiniDodge...");
 		setTitle("Mini Dodge");
 		setSize(600, 600);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -90,31 +93,73 @@ public class MiniDodge extends JFrame implements ActionListener {
 				new JustMiniMain();
 			}
 		});
+		System.out.println("MiniDodge initialized...");
+		System.out.println();
 	}
 
-	// 게임 설명 패널 생성 메서드
+	// 게임 설명 패널 생성 메소드
 	private JPanel createInstructionPanel() {
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 600, 600);
-		panel.setLayout(null);
+		panel.setLayout(new BorderLayout()); // BorderLayout 사용
+		panel.setBackground(Color.BLACK);
 
-		JLabel instructionLabel = new JLabel("<html>Game Description: <br>Survive as long as " +
-				"possible while avoiding shurikens! " +
-				"<br>Use the arrow keys to control the player.</html>",
+		// 이미지 로드 및 크기 조정
+		ImageIcon originalIcon = new ImageIcon(getClass().getResource("/images/minidodge/instruction.png"));
+		Image scaledImage = originalIcon.getImage().getScaledInstance(400, 300, Image.SCALE_SMOOTH);
+		ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+		// 이미지 JLabel 생성 및 중앙 배치
+		JLabel instructionImageLabel = new JLabel(scaledIcon);
+		instructionImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		instructionImageLabel.setVerticalAlignment(SwingConstants.CENTER);
+
+		// 텍스트 JLabel 생성
+		JLabel instructionLabel = new JLabel(
+				"<html><div style='text-align: center;'>Survive as long as possible while avoiding shurikens!<br>" +
+						"Use the arrow keys to control the Ninja.<br>" +
+						"(Press Enter to start the game)</div></html>",
 				SwingConstants.CENTER);
-		instructionLabel.setBounds(50, 100, 500, 100);
 		instructionLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-		panel.add(instructionLabel);
+		instructionLabel.setForeground(Color.WHITE);
+		instructionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		instructionLabel.setVerticalAlignment(SwingConstants.TOP);
+
+		// 텍스트 패널 생성
+		JPanel textPanel = new JPanel();
+		textPanel.setBackground(Color.BLACK);
+		textPanel.setLayout(new BorderLayout());
+		textPanel.add(instructionLabel, BorderLayout.CENTER);
+		textPanel.setPreferredSize(new Dimension(600, 200)); // 텍스트 영역의 높이를 충분히 설정
+
+		// 패널에 컴포넌트 추가
+		panel.add(instructionImageLabel, BorderLayout.CENTER); // 중앙에 이미지
+		panel.add(textPanel, BorderLayout.SOUTH);              // 아래에 텍스트
+
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (gameStarted == false) {
+						// 튜토리얼 종료 후 게임 시작
+						startGame();
+						gameStarted = true;
+					} else {
+						return;
+					}
+				}
+			}
+		});
 
 		startButton = new JButton("Game Start");
 		startButton.setBounds(250, 300, 100, 50);
 		startButton.addActionListener(e -> startGame());
-		panel.add(startButton);
+		// panel.add(startButton);
 
 		return panel;
 	}
 
-	// 게임 시작 설정 메서드
+	// 게임 시작 설정 메소드
 	private void startGame() {
 		instructionPanel.setVisible(false);
 		gamePanel.hideGameOver(); // 게임 오버 UI 숨기기
@@ -169,9 +214,10 @@ public class MiniDodge extends JFrame implements ActionListener {
 		gamePanel.repaint();
 	}
 
-	// 게임 종료 메서드
+	// 게임 종료 메소드
 	private void endGame(long currentTime) {
 		gameOver = true;
+		gameStarted = false;
 		timer.stop(); // 타이머 중지
 		int finalScore = (int) ((currentTime - startTime) / 1000.0 * 100);
 		gamePanel.displayGameOver(finalScore); // 초기 화면 설명 패널 표시
@@ -187,6 +233,7 @@ public class MiniDodge extends JFrame implements ActionListener {
 		private JButton retryButton;
 		private JLabel gameOverLabel;
 		private JLabel scoreLabel;
+		private JLabel restartLabel;
 
 		public GamePanel() {
 			setLayout(null);
@@ -203,11 +250,18 @@ public class MiniDodge extends JFrame implements ActionListener {
 			scoreLabel.setVisible(false); // 점수 표시
 			add(scoreLabel);
 
+			restartLabel = new JLabel("Press Enter to restart the game.", SwingConstants.CENTER);
+			restartLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+			restartLabel.setBounds(150, 250, 300, 50);
+			restartLabel.setVisible(false);
+			add(restartLabel);
+
+
 			retryButton = new JButton("Restart");
 			retryButton.setBounds(250, 300, 100, 50);
 			retryButton.setVisible(false); // 게임 오버 시 나타나는 버튼
 			retryButton.addActionListener(e -> startGame()); // 다시 시작 클릭 시 startGame 호출
-			add(retryButton);
+			// add(retryButton);
 		}
 
 		@Override
@@ -234,18 +288,20 @@ public class MiniDodge extends JFrame implements ActionListener {
 			}
 		}
 
-		// 게임 오버 화면 표시 메서드
+		// 게임 오버 화면 표시 메소드
 		public void displayGameOver(int score) {
 			gameOverLabel.setVisible(true);
 			scoreLabel.setText("Score: " + score);
 			scoreLabel.setVisible(true);
+			restartLabel.setVisible(true);
 			retryButton.setVisible(true);
 		}
 
-		// 게임 오버 화면 숨기기 메서드
+		// 게임 오버 화면 숨기기 메소드
 		public void hideGameOver() {
 			gameOverLabel.setVisible(false);
 			scoreLabel.setVisible(false);
+			restartLabel.setVisible(false);
 			retryButton.setVisible(false);
 		}
 	}
