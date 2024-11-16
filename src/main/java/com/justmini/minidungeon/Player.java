@@ -1,6 +1,8 @@
 package com.justmini.minidungeon;
 
-public class Player {
+import com.justmini.util.SoundPlayer;
+
+public class Player implements Battle{
 
     private int x, y;
     private int level, exp;
@@ -70,7 +72,25 @@ public class Player {
         expToLevelUp *= 2; // 다음 레벨 업까지 필요한 경험치 두 배로 증가
         maxHp += 98;
         hp = maxHp;
-        atk += 10;
-        def += 8;
+        atk += 5;
+        def += 4;
+    }
+
+    @Override
+    public BattleResult battle(Player player, Monster monster) {
+        //SoundPlayer.playSound("/sounds/battle_sound.wav");
+
+        // 방어력 비율 계산
+        double defenseRatio = (double) monster.getDef() / (100 + monster.getDef());
+
+        // 데미지 계산
+        int damageToMonster = (int) Math.max(0, player.getAtk() * (1 - defenseRatio));
+
+        monster.setHp(monster.getHp() - damageToMonster);
+
+        boolean monsterDefeated = monster.getHp() <= 0;
+
+        // BattleResult 객체 생성하여 반환
+        return new BattleResult(damageToMonster, 0, monsterDefeated, false);
     }
 }

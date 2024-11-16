@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import com.justmini.main.JustMiniMain;
+import com.justmini.util.SoundPlayer;
 
 public class MiniDodge extends JFrame implements ActionListener {
 	private int playerX, playerY; // 플레이어 위치 변수
@@ -89,6 +90,9 @@ public class MiniDodge extends JFrame implements ActionListener {
 				// 현재 게임 창 닫기
 				dispose();
 
+				// 게임 종료 처리
+				endGame(System.currentTimeMillis());
+
 				// 메인 화면 표시
 				new JustMiniMain();
 			}
@@ -106,7 +110,7 @@ public class MiniDodge extends JFrame implements ActionListener {
 
 		// 이미지 로드 및 크기 조정
 		ImageIcon originalIcon = new ImageIcon(getClass().getResource("/images/minidodge/instruction.png"));
-		Image scaledImage = originalIcon.getImage().getScaledInstance(400, 300, Image.SCALE_SMOOTH);
+		Image scaledImage = originalIcon.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
 		ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
 		// 이미지 JLabel 생성 및 중앙 배치
@@ -161,14 +165,15 @@ public class MiniDodge extends JFrame implements ActionListener {
 
 	// 게임 시작 설정 메소드
 	private void startGame() {
+		SoundPlayer.playBackgroundMusic("/sounds/ninja.wav");
 		instructionPanel.setVisible(false);
 		gamePanel.hideGameOver(); // 게임 오버 UI 숨기기
 		shurikens.clear();
 		gameOver = false;
 
 		// 플레이어 위치를 중앙으로 설정
-		playerX = (getWidth() - 30) / 2;
-		playerY = (getHeight() - 30) / 2;
+		playerX = (getWidth() - 35) / 2;
+		playerY = (getHeight() - 35) / 2;
 
 		startTime = System.currentTimeMillis();
 		timer.start();
@@ -195,8 +200,8 @@ public class MiniDodge extends JFrame implements ActionListener {
 			playerY += 3;
 
 		// 플레이어 위치가 화면 밖으로 나가지 않도록 제한
-		playerX = Math.max(0, Math.min(getWidth() - 30, playerX));
-		playerY = Math.max(0, Math.min(getHeight() - 30, playerY));
+		playerX = Math.max(0, Math.min(getWidth() - 35, playerX));
+		playerY = Math.max(0, Math.min(getHeight() - 35, playerY));
 
 		// 수리검 충돌 및 화면 밖으로 나간 수리검 제거
 		for (int i = 0; i < shurikens.size(); i++) {
@@ -206,7 +211,8 @@ public class MiniDodge extends JFrame implements ActionListener {
 				shurikens.remove(i);
 				i--;
 			}
-			if (new Rectangle(playerX + 8, playerY + 8, 8, 8).intersects(shuriken.getRectangle())) {
+			if (new Rectangle(playerX + 10, playerY + 10, 8, 8).intersects(shuriken.getRectangle())) {
+				SoundPlayer.playSound("/sounds/battle_sound1.wav");
 				endGame(System.currentTimeMillis()); // 충돌 시 게임 종료
 			}
 		}
@@ -280,7 +286,7 @@ public class MiniDodge extends JFrame implements ActionListener {
 				g.setColor(Color.BLACK);
 				g.drawString("Score: " + score, getWidth() - 120, 50); // 화면에 점수 표시
 
-				g.drawImage(playerImage, playerX, playerY, 30, 30, null); // 플레이어 이미지 그리기
+				g.drawImage(playerImage, playerX, playerY, 35, 35, null); // 플레이어 이미지 그리기
 
 				for (Shuriken shuriken : shurikens) {
 					shuriken.draw(g); // 수리검 그리기

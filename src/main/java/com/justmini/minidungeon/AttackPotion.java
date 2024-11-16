@@ -6,7 +6,7 @@ public class AttackPotion extends Item {
 
     public AttackPotion(int x, int y) {
         super(x, y, "attack potion", "/images/minidungeon/attack_potion.png");
-        this.attackBoost = 10;
+        this.attackBoost = 5;
     }
 
     public int getAttackBoost() {

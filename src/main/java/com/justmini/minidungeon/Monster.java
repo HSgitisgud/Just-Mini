@@ -1,10 +1,12 @@
 package com.justmini.minidungeon;
 
+import com.justmini.util.SoundPlayer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-public abstract class Monster {
+public abstract class Monster implements Battle {
 
     protected int x;
     protected int y;
@@ -76,5 +78,23 @@ public abstract class Monster {
 
     public int getExp() {
         return exp;
+    }
+
+    @Override
+    public BattleResult battle(Player player, Monster monster) {
+        SoundPlayer.playSound("/sounds/battle_sound.wav");
+
+        // 방어력 비율 계산
+        double defenseRatio = (double) player.getDef() / (100 + player.getDef());
+
+        // 데미지 계산
+        int damageToPlayer = (int) Math.max(0, monster.getAtk() * (1 - defenseRatio));
+
+        player.setHp(player.getHp() - damageToPlayer);
+
+        boolean playerDefeated = player.getHp() <= 0;
+
+        // BattleResult 객체 생성하여 반환
+        return new BattleResult(0, damageToPlayer, false, playerDefeated);
     }
 }

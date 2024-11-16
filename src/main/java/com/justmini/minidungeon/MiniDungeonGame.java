@@ -1,6 +1,7 @@
 package com.justmini.minidungeon;
 
 import com.justmini.main.JustMiniMain;
+import com.justmini.util.SoundPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -146,6 +147,8 @@ public class MiniDungeonGame extends JFrame {
 
         // 게임 UI 초기화
         initGameUI();
+
+        SoundPlayer.playBackgroundMusic("/sounds/ruins.wav");
 
         // 플레이어 및 게임 로직 초기화
         player = new Player();

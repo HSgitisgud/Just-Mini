@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import com.justmini.minidungeon.MiniDungeonGame;
 import com.justmini.minidodge.MiniDodge;
+import com.justmini.util.SoundPlayer;
 // import com.justmini.minipangpang.MiniPangPangGame;
 // import com.justmini.minipanda.MiniPandaGame;
 
@@ -169,6 +170,7 @@ public class JustMiniMain extends JFrame {
         dungeonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                SoundPlayer.playSound("/sounds/button1.wav");
                 // Mini Dungeon 게임 실행
                 new MiniDungeonGame();
                 dispose(); // 현재 메인 화면 닫기
@@ -178,8 +180,27 @@ public class JustMiniMain extends JFrame {
         dodgeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                SoundPlayer.playSound("/sounds/button1.wav");
                 new MiniDodge();
                 dispose();
+            }
+        });
+
+        pangpangButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SoundPlayer.playSound("/sounds/button1.wav");
+                // new MiniPangPang();
+                // dispose();
+            }
+        });
+
+        pandaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SoundPlayer.playSound("/sounds/button1.wav");
+                // new MiniPanda();
+                // dispose();
             }
         });
 
@@ -188,6 +209,7 @@ public class JustMiniMain extends JFrame {
         // 배경 패널을 프레임에 추가
         setContentPane(backgroundPanel);
         setVisible(true);
+        SoundPlayer.playBackgroundMusic("/sounds/main_theme.wav");
         System.out.println("JustMiniMain initialized.");
         System.out.println();
     }

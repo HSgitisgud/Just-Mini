@@ -6,7 +6,7 @@ public class HealingPotion extends Item {
 
     public HealingPotion(int x, int y) {
         super(x, y, "healing potion", "/images/minidungeon/healing_potion.png");
-        this.healAmount = 300;
+        this.healAmount = 100;
     }
 
     public int getHealAmount() {
