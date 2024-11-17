@@ -1,3 +1,5 @@
+//할 것: 타이틀 아이콘 바꾸기.
+
 package com.justmini.main;
 
 import javax.swing.*;
@@ -8,7 +10,7 @@ import java.awt.event.ActionListener;
 import com.justmini.minidungeon.MiniDungeonGame;
 import com.justmini.minidodge.MiniDodge;
 import com.justmini.util.SoundPlayer;
-// import com.justmini.minipangpang.MiniPangPangGame;
+import com.justmini.minipangpang.MiniPangPang;
 // import com.justmini.minipanda.MiniPandaGame;
 
 public class JustMiniMain extends JFrame {
@@ -190,8 +192,8 @@ public class JustMiniMain extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SoundPlayer.playSound("/sounds/button1.wav");
-                // new MiniPangPang();
-                // dispose();
+                new MiniPangPang();
+                dispose();
             }
         });
 
@@ -203,8 +205,6 @@ public class JustMiniMain extends JFrame {
                 // dispose();
             }
         });
-
-        // pangpang, panda의 액션 리스너도 추가 예정
 
         // 배경 패널을 프레임에 추가
         setContentPane(backgroundPanel);

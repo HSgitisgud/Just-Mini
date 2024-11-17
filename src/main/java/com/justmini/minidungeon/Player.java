@@ -78,7 +78,7 @@ public class Player implements Battle{
 
     @Override
     public BattleResult battle(Player player, Monster monster) {
-        //SoundPlayer.playSound("/sounds/battle_sound.wav");
+        SoundPlayer.playSound("/sounds/battle_sound.wav");
 
         // 방어력 비율 계산
         double defenseRatio = (double) monster.getDef() / (100 + monster.getDef());

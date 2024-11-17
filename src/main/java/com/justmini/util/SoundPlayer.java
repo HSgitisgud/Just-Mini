@@ -68,6 +68,7 @@ public class SoundPlayer {
             }
 
             // 특정 사운드가 재생될 때 배경 음악 중단
+            // 그냥 배경음악 쓰는데서 변수를 만들어주고 특정 조건일 때 변수.stopBackgroundMusic()하게 하는 것도 나쁘지 않을지도?
             if (soundFilePath.equals("/sounds/battle_sound1.wav")) {
                 stopBackgroundMusic();
             }
@@ -93,6 +94,14 @@ public class SoundPlayer {
             }
 
             else if (soundFilePath.equals("/sounds/main_theme.wav")) {
+                stopBackgroundMusic();
+            }
+
+            else if (soundFilePath.equals("/sounds/jelly_theme.wav")) {
+                stopBackgroundMusic();
+            }
+
+            else if (soundFilePath.equals("/sounds/notification.wav")) {
                 stopBackgroundMusic();
             }
 

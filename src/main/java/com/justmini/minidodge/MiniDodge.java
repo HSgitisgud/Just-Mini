@@ -121,7 +121,7 @@ public class MiniDodge extends JFrame implements ActionListener {
 		// 텍스트 JLabel 생성
 		JLabel instructionLabel = new JLabel(
 				"<html><div style='text-align: center;'>Survive as long as possible while avoiding shurikens!<br>" +
-						"Use the arrow keys to control the Ninja.<br>" +
+						"Use the arrow keys to control the Ninja.<br><br>" +
 						"(Press Enter to start the game)</div></html>",
 				SwingConstants.CENTER);
 		instructionLabel.setFont(new Font("Arial", Font.PLAIN, 18));

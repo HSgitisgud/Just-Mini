@@ -184,6 +184,7 @@ public class GameLogic {
                         mainFrame.updateCombatLog("The Player is down... Game Over!");
                         mainFrame.updatePlayerStats();
                         // 게임 종료 처리
+                        if (!gameRunning) return;
                         SoundPlayer.playSound("/sounds/game_over.wav");
                         JOptionPane.showMessageDialog(mainFrame, "Game Over!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
 
