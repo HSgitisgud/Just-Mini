@@ -11,7 +11,7 @@ import com.justmini.minidungeon.MiniDungeonGame;
 import com.justmini.minidodge.MiniDodge;
 import com.justmini.util.SoundPlayer;
 import com.justmini.minipangpang.MiniPangPang;
-// import com.justmini.minipanda.MiniPandaGame;
+import com.justmini.minipanda.MiniPanda;
 
 public class JustMiniMain extends JFrame {
     public JustMiniMain() {
@@ -201,8 +201,8 @@ public class JustMiniMain extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SoundPlayer.playSound("/sounds/button1.wav");
-                // new MiniPanda();
-                // dispose();
+                new MiniPanda();
+                dispose();
             }
         });
 

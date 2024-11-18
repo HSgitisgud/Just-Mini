@@ -211,7 +211,8 @@ public class MiniDodge extends JFrame implements ActionListener {
 				shurikens.remove(i);
 				i--;
 			}
-			if (new Rectangle(playerX + 10, playerY + 10, 8, 8).intersects(shuriken.getRectangle())) {
+			// 캐릭터 중앙에 15x15 판정 사각형
+			if (new Rectangle(playerX + 10, playerY + 10, 15, 15).intersects(shuriken.getRectangle())) {
 				SoundPlayer.playSound("/sounds/battle_sound1.wav");
 				endGame(System.currentTimeMillis()); // 충돌 시 게임 종료
 			}

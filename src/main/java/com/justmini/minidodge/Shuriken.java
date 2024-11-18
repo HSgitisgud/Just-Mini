@@ -24,7 +24,7 @@ public class Shuriken {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(shurikenImage, x, y, 15, 15, null); // 15x15 크기로 이미지 그리기
+		g.drawImage(shurikenImage, x, y, 20, 20, null); // 20x20 크기로 이미지 그리기
 	}
 
 	// 특정 방향으로 이동하는 수리검 생성
@@ -60,6 +60,6 @@ public class Shuriken {
 
 	// 수리검의 충돌 판정을 위한 사각형 반환
 	public Rectangle getRectangle() {
-		return new Rectangle(x, y, 8, 8);
+		return new Rectangle(x + 5, y + 5, 10, 10); // 수리검 중앙에 10x10 판정 사각형
 	}
 }
