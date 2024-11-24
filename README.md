@@ -55,7 +55,11 @@
 
 ## Installation
 
-To play **Just Mini**, follow these steps:
+To play **Just Mini** visit itch.io:
+
+https://hsbw.itch.io/just-mini
+
+Or follow these steps:
 
 1.  **Clone the Repository**:
     
