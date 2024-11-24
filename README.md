@@ -60,6 +60,11 @@ To play **Just Mini** visit itch.io:
 https://hsbw.itch.io/just-mini
 
 
+Also you can check the release page:
+
+https://github.com/HSgitisgud/Just-Mini/releases/tag/v1.0.0
+
+
 Or follow these steps:
 
 1.  **Clone the Repository**:
