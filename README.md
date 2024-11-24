@@ -59,6 +59,7 @@ To play **Just Mini** visit itch.io:
 
 https://hsbw.itch.io/just-mini
 
+
 Or follow these steps:
 
 1.  **Clone the Repository**:
@@ -126,8 +127,6 @@ We welcome contributions from the community! If you're interested in improving *
 3.  **Commit Your Changes**: Make your changes and commit them with a descriptive message.
 4.  **Push to Your Branch**: Use `git push origin feature/YourFeatureName`.
 5.  **Submit a Pull Request**: Go to the original repository and open a pull request.
-
-Please read our [Contributing Guidelines](CONTRIBUTING.md) for more details.
 
 ## License
 
