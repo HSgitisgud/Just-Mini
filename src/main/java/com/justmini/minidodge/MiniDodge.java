@@ -33,6 +33,10 @@ public class MiniDodge extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setResizable(false);
 
+		// 아이콘 이미지 설정
+		ImageIcon icon = new ImageIcon(getClass().getResource("/images/char_32.png"));
+		setIconImage(icon.getImage());
+
 		shurikens = new ArrayList<>();
 		patternManager = new PatternManager(shurikens, getWidth(), getHeight());
 
@@ -200,8 +204,8 @@ public class MiniDodge extends JFrame implements ActionListener {
 			playerY += 3;
 
 		// 플레이어 위치가 화면 밖으로 나가지 않도록 제한
-		playerX = Math.max(0, Math.min(getWidth() - 35, playerX));
-		playerY = Math.max(0, Math.min(getHeight() - 35, playerY));
+		playerX = Math.max(0, Math.min(getWidth() - 50, playerX));
+		playerY = Math.max(0, Math.min(getHeight() - 75, playerY));
 
 		// 수리검 충돌 및 화면 밖으로 나간 수리검 제거
 		for (int i = 0; i < shurikens.size(); i++) {

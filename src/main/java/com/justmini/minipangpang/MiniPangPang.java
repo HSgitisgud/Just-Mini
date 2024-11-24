@@ -50,6 +50,10 @@ public class MiniPangPang extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        // 아이콘 이미지 설정
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/char_32.png"));
+        setIconImage(icon.getImage());
+
         loadIcons();
         //loadFixedStoneIcon();
         loadSmokeIcon(); // 연기 이미지 로드

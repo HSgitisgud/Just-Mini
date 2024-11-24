@@ -51,6 +51,10 @@ public class MiniDungeonGame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        // 아이콘 이미지 설정
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/char_32.png"));
+        setIconImage(icon.getImage());
+
         // 프레임 포커스 설정
         setFocusable(true);
         requestFocusInWindow();
@@ -124,6 +128,10 @@ public class MiniDungeonGame extends JFrame {
         setSize(1350, 705);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        // 아이콘 이미지 설정
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/char_32.png"));
+        setIconImage(icon.getImage());
     }
 
     public void startGame() {

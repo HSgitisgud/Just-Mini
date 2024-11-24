@@ -22,6 +22,10 @@ public class JustMiniMain extends JFrame {
         setLocationRelativeTo(null); // 화면 중앙에 표시
         setResizable(false); // 절대 좌표 쓸 거니깐 전체화면 못하게
 
+        // 아이콘 이미지 설정
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/char_32.png"));
+        setIconImage(icon.getImage());
+
         // 배경 패널 설정
         BackgroundPanel backgroundPanel = new BackgroundPanel();
         backgroundPanel.setLayout(null); // 절대 위치를 사용

@@ -16,6 +16,10 @@ public class MiniPanda {
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // 창 닫힘 설정 (현재 창만 닫힘)
             frame.setResizable(false); // 창 크기 변경 불가
 
+            // 아이콘 이미지 설정
+            ImageIcon icon = new ImageIcon(getClass().getResource("/images/char_32.png"));
+            frame.setIconImage(icon.getImage());
+
             GamePanel gamePanel = new GamePanel(); // 게임 화면을 표시할 GamePanel 객체 생성
             frame.add(gamePanel); // GamePanel을 창에 추가
             frame.pack(); // GamePanel 크기에 맞게 창 크기 조정
