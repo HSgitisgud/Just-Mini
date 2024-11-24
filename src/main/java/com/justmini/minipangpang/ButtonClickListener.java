@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ButtonClickListener implements ActionListener {
     private JButton button;
@@ -13,6 +14,7 @@ public class ButtonClickListener implements ActionListener {
     private int col;
     private MiniPangPang miniPangPang;
     private static JButton lastClickedButton = null; // 마지막으로 클릭된 버튼 추적
+    private static ArrayList<JButton> adjacentButtons = new ArrayList<>(); // 인접한 버튼들 저장
 
     public ButtonClickListener(JButton button, int row, int col, MiniPangPang miniPangPang) {
         this.button = button;
@@ -25,10 +27,16 @@ public class ButtonClickListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         SoundPlayer.playSound("/sounds/button2.wav");
 
-        if (lastClickedButton != null) {
-            // 이전 클릭된 버튼 스타일 초기화
-            lastClickedButton.setBorder(null);
-            lastClickedButton.setBackground(Color.WHITE);
+        // 이전에 강조된 버튼과 인접한 버튼들의 스타일 초기화
+        if (miniPangPang.selectedButton == null) {
+            if (lastClickedButton != null) {
+                lastClickedButton.setBorder(null);
+                lastClickedButton.setBackground(Color.WHITE);
+            }
+            for (JButton adjButton : adjacentButtons) {
+                adjButton.setBackground(Color.WHITE);
+            }
+            adjacentButtons.clear();
         }
 
         // 현재 클릭된 버튼 강조
@@ -41,45 +49,20 @@ public class ButtonClickListener implements ActionListener {
             miniPangPang.selectedButton = button;
             miniPangPang.selectedRow = row;
             miniPangPang.selectedCol = col;
+
+            // 인접한 버튼들 강조
+            highlightAdjacentButtons();
         } else {
             // 두 번째 버튼 클릭 시
 
             // 같은 버튼을 두 번 클릭한 경우
             if (miniPangPang.selectedButton == button) {
-                // 선택 초기화
-                miniPangPang.selectedButton.setBorder(null);
-                miniPangPang.selectedButton.setBackground(Color.WHITE);
-                miniPangPang.selectedButton = null;
-                miniPangPang.selectedRow = -1;
-                miniPangPang.selectedCol = -1;
-                lastClickedButton = null;
+                resetSelection();
                 return;
             }
 
-            // 돌(고정된 돌 아이콘)인지 확인
-//            Icon fixedStoneIcon = miniPangPang.getFixedStoneIcon();
-//            if (button.getIcon().equals(fixedStoneIcon) || miniPangPang.selectedButton.getIcon().equals(fixedStoneIcon)) {
-//                // 돌은 교환할 수 없음
-//                JOptionPane.showMessageDialog(null, "돌은 교환할 수 없습니다.");
-//                // 선택 상태 초기화
-//                miniPangPang.selectedButton.setBorder(null);
-//                miniPangPang.selectedButton.setBackground(Color.WHITE);
-//
-//                button.setBorder(null); // 두 번째로 클릭한 버튼의 테두리 초기화
-//                button.setBackground(Color.WHITE); // 두 번째로 클릭한 버튼의 배경색 초기화
-//
-//                miniPangPang.selectedButton = null;
-//                miniPangPang.selectedRow = -1;
-//                miniPangPang.selectedCol = -1;
-//                lastClickedButton = null;
-//                return;
-//            }
-
             // 인접한 버튼인지 확인
-            int rowDiff = Math.abs(row - miniPangPang.selectedRow);
-            int colDiff = Math.abs(col - miniPangPang.selectedCol);
-
-            if ((rowDiff == 1 && colDiff == 0) || (rowDiff == 0 && colDiff == 1)) {
+            if (adjacentButtons.contains(button)) {
                 // 인접한 버튼이면 교환 수행
                 Icon tempIcon = button.getIcon();
                 button.setIcon(miniPangPang.selectedButton.getIcon());
@@ -96,24 +79,56 @@ public class ButtonClickListener implements ActionListener {
                     tempIcon = button.getIcon();
                     button.setIcon(miniPangPang.selectedButton.getIcon());
                     miniPangPang.selectedButton.setIcon(tempIcon);
-                    //JOptionPane.showMessageDialog(null, "No Matches.");
                 }
-            } else {
-                // 인접하지 않으면 교환 불가
-                JOptionPane.showMessageDialog(null, "You can only swap the adjacent jellies in four directions.");
             }
 
             // 선택 상태 초기화
+            resetSelection();
+        }
+    }
+
+    private void highlightAdjacentButtons() {
+        int[][] directions = {
+                {-1, 0}, // 위
+                {1, 0},  // 아래
+                {0, -1}, // 왼쪽
+                {0, 1}   // 오른쪽
+        };
+
+        for (int[] dir : directions) {
+            int newRow = miniPangPang.selectedRow + dir[0];
+            int newCol = miniPangPang.selectedCol + dir[1];
+
+            if (newRow >= 0 && newRow < miniPangPang.GRID_SIZE && newCol >= 0 && newCol < miniPangPang.GRID_SIZE) {
+                JButton adjButton = miniPangPang.buttons[newRow][newCol];
+                adjButton.setBackground(new Color(255, 220, 220)); // 더 옅은 빨간색 배경
+                adjacentButtons.add(adjButton);
+            }
+        }
+    }
+
+    private void resetSelection() {
+        // 선택된 버튼 스타일 초기화
+        if (miniPangPang.selectedButton != null) {
             miniPangPang.selectedButton.setBorder(null);
             miniPangPang.selectedButton.setBackground(Color.WHITE);
-
-            button.setBorder(null); // 두 번째로 클릭한 버튼의 테두리 초기화
-            button.setBackground(Color.WHITE); // 두 번째로 클릭한 버튼의 배경색 초기화
-
-            miniPangPang.selectedButton = null;
-            miniPangPang.selectedRow = -1;
-            miniPangPang.selectedCol = -1;
-            lastClickedButton = null;
         }
+
+        // 인접한 버튼들 스타일 초기화
+        for (JButton adjButton : adjacentButtons) {
+            adjButton.setBackground(Color.WHITE);
+        }
+        adjacentButtons.clear();
+
+        // 현재 버튼 스타일 초기화
+        if (button != miniPangPang.selectedButton) {
+            button.setBorder(null);
+            button.setBackground(Color.WHITE);
+        }
+
+        miniPangPang.selectedButton = null;
+        miniPangPang.selectedRow = -1;
+        miniPangPang.selectedCol = -1;
+        lastClickedButton = null;
     }
 }
