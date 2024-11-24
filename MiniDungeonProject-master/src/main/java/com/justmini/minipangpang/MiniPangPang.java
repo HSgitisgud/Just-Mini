@@ -127,7 +127,7 @@ public class MiniPangPang extends JFrame {
 
     // 그리드를 리필하는 메서드
     public void refillGrid() {
-        for (int j = 0; j < GRID_SIZE; j++) { // 열 단위로 처리 (비어있는 slot을 채우고 아이콘을 이동)
+        for (int j = 0; j < GRID_SIZE; j++) { // 열 단위로 처리 (비어있는 slot을 채우고 아이콘을 이동한다.)
             int emptySlots = 0;
             for (int i = GRID_SIZE - 1; i >= 0; i--) {
                 if (!buttons[i][j].isEnabled() || buttons[i][j].getIcon() == null) {
