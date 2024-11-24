@@ -40,9 +40,6 @@ public class GameLogic {
     // 게임 종료 메소드
     public void stopGame() {
         gameRunning = false; // 게임 실행 상태를 false로 설정
-
-        // 타이머나 스레드가 있다면 여기서 종료 처리
-        // 예를 들어, Timer 객체가 있다면 timer.stop(); 호출
     }
 
     public void handlePlayerInput(int keyCode) {
@@ -114,7 +111,7 @@ public class GameLogic {
                     // 모든 몬스터를 처치했는지 확인
                     if (allMonsters.isEmpty()) {
                         gameWon();
-                        return; // 게임이 끝났으므로 메서드 종료
+                        return; // 게임이 끝났으므로 메소드 종료
                     }
                 }
             } else {
@@ -177,8 +174,12 @@ public class GameLogic {
                     mainFrame.updateCombatLog("You are attacked by the monster!");
                     BattleResult result = monster.battle(player, monster);
 
-                    mainFrame.updateCombatLog(monster.getName() + " deals " + result.getDamageToPlayer() + " damage to player"
-                            + ". Now player has " + player.getHp() + " HP");
+                    if (result.getDamageToPlayer() == 0 && result.getDamageToMonster() == 0) {
+                        mainFrame.updateCombatLog("The slime seems confused and doesn't attack!");
+                    } else {
+                        mainFrame.updateCombatLog(monster.getName() + " deals " + result.getDamageToPlayer() + " damage to Player"
+                                + ". Now Player has " + player.getHp() + " HP");
+                    }
 
                     if (player.getHp() <= 0) {
                         mainFrame.updateCombatLog("The Player is down... Game Over!");
@@ -280,76 +281,6 @@ public class GameLogic {
             }
         }
     }
-
-    // 배틀 메소드인데 ConcurrentModificationException도 그렇고, battle_sound.wav 씹히는 문제도 그렇고 다 여기서 문제 생기는듯
-    // 일단 movePlayer랑 moveMonsters 두개에서 이거 참조하는데 거기서 concurrency 문제 생기는 걸로 보이고, 그거의 연장선상에서 소리도 씹히는 걸로 보임.
-    // 정확히는 몬스터 리스트가 동시에 삭제되려고 해서 생기는 문제네.
-    // 이런 경우 기본적인 해결 방안으로 thread 동기화 맞춰주는 방식을 쓸 수 있겠지만 그럼 어디서부터 손대야 하는지도 모르겠다.
-    // 내가 생각하는 해결 방안은 게임 로직에서 배틀 메소드 없애버리고, 배틀 인터페이스를 만든 다음
-    // 플레이어, 몬스터 각 클래스들이 그거 implement 받아서 각자 다른 방식으로 공격하게 하는 것이 옳은 해결법으로 보임.
-    // 몬스터 리스트 건드는 거는 플레이어의 공격에서만 일어나도록 하면 되겠고.
-    // 몰라. 일단 작동하니 내비두고 나중에 누구한테 물어보던지 하자. 11/16
-    // CopyOnWriteArrayList 쓰면 된다해서 써봤는데 해결 안되는디? 그냥 인터페이스 만들어야겠다. 만들면 주석 지우고.
-
-    //Battle 인터페이스 만들어서 이제 이건 레거시인데 열심히 만든거라 뭔가 지우기 아깝네ㅋㅋ 이래서 레거시 코드가 남는구나.
-//    private void battle(Monster monster) {
-//        if (!gameRunning) return; // 게임이 종료되었으면 메소드 종료
-//
-//        SoundPlayer.playSound("/sounds/battle_sound.wav");
-//
-//        // 전투 로직 구현. 롤 방식으로 방어력 계산 바꿔봄. 11/15
-//        int damageToMonster = (int) Math.max(0, player.getAtk() * (1 - ((double) monster.getDef() / (100 + monster.getDef()))));
-//        int damageToPlayer = (int) Math.max(0, monster.getAtk() * (1 - ((double) player.getDef() / (100 + player.getDef()))));
-//        // 다 좋은데 밸런스 잡기가 너무 어렵네 기존 (atk - def) 방식은 def 망겜이 되고, 롤 방식은 def가 큰 의미를 가지지 못하고...
-//        // 일단 롤 방식이니깐 대충 플레이어 공방체를 가렌 1렙 능력치로 설정해보면 좋을듯, 적은 정글몹 능력치로 설정해보고
-//
-//        monster.setHp(monster.getHp() - damageToMonster);
-//        player.setHp(player.getHp() - damageToPlayer);
-//
-//        mainFrame.updateCombatLog("Player deals " + damageToMonster + " damage " + "to a " + monster.getName()
-//                + ". Now " + monster.getName() + " has " + monster.getHp() + " HP");
-//        mainFrame.updateCombatLog("The " + monster.getName() + " deals " + damageToPlayer + " damage to the player");
-//
-//        if (monster.getHp() <= 0) {
-//            currentRoom.removeMonster(monster);
-//            allMonsters.remove(monster);
-//            mainFrame.updateCombatLog("You've killed the " + monster.getName() + "!");
-//            int previousLevel = player.getLevel();
-//            player.addExp(monster.getExp());
-//
-//            // 레벨 업 여부 확인
-//            if (player.getLevel() > previousLevel) {
-//                mainFrame.updateCombatLog("Level up! Current Level: " + player.getLevel());
-//                SoundPlayer.playSound("/sounds/level_up.wav");
-//            }
-//
-//            mainFrame.updatePlayerStats();
-//            currentRoom.updateMonsterPanel();
-//
-//            // 모든 몬스터를 처치했는지 확인
-//            if (allMonsters.isEmpty()) {
-//                gameWon();
-//            }
-//        }
-//
-//        if (player.getHp() <= 0) {
-//            mainFrame.updateCombatLog("The Player is down... Game Over!");
-//            // 게임 종료 처리
-//            SoundPlayer.playSound("/sounds/game_over.wav");
-//            JOptionPane.showMessageDialog(mainFrame, "Game Over!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-//
-//            // 게임 로직 종료
-//            stopGame();
-//
-//            // 게임 프레임에서 이벤트 리스너 제거
-//            mainFrame.stopGame();
-//
-//            // 현재 게임 창 닫기
-//            mainFrame.dispose();
-//            // 메인 화면 표시
-//            new JustMiniMain();
-//        }
-//    }
 
     private void gameWon() {
         if (!gameRunning) return; // 게임이 종료되었으면 메소드 종료

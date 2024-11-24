@@ -6,7 +6,6 @@ public class BattleResult {
     private boolean monsterDefeated;
     private boolean playerDefeated;
 
-    // 생성자 및 getter, setter 추가
     public BattleResult(int damageToMonster, int damageToPlayer, boolean monsterDefeated, boolean playerDefeated) {
         this.damageToMonster = damageToMonster;
         this.damageToPlayer = damageToPlayer;
@@ -14,7 +13,6 @@ public class BattleResult {
         this.playerDefeated = playerDefeated;
     }
 
-    // Getter 메서드들
     public int getDamageToMonster() {
         return damageToMonster;
     }

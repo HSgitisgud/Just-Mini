@@ -27,13 +27,7 @@ public class Room {
         this.name = " " + index;
         this.gameLogic = gameLogic;
 
-        // 타일 생성
-//        Tile[][] tiles = new Tile[verticalTiles][horizontalTiles];
-//        for (int y = 0; y < verticalTiles; y++) {
-//            for (int x = 0; x < horizontalTiles; x++) {
-//                tiles[y][x] = new Tile(x, y, true, "/images/minidungeon/grass_tile.png");
-//            }
-//        }
+        // 타일, 하드코딩 한 것 고쳐야 함.
         Tile[][] tiles = new Tile[verticalTiles][horizontalTiles];
         for (int y = 0; y < verticalTiles; y++) {
             for (int x = 0; x < horizontalTiles; x++) {

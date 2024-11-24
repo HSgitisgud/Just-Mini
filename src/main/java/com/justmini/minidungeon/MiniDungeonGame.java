@@ -109,9 +109,6 @@ public class MiniDungeonGame extends JFrame {
         rightPanel.add(itemScrollPane);
 
         rightPanel.add(Box.createVerticalStrut(16)); // 16 픽셀의 수직 간격 추가
-        // 도대체 왜 정렬이 안되냐고!!!
-        // rightPanel.add(Box.createHorizontalStrut(60)); // 왜 스탯이 움직이는데 미니맵이 움직이라고!!!
-        // 박스 레이아웃 구성이 대체 어떻게 돼있는 거야
 
         miniMapLabel = new JLabel("Map");
         rightPanel.add(miniMapLabel);
@@ -127,18 +124,6 @@ public class MiniDungeonGame extends JFrame {
         setSize(1350, 705);
         setLocationRelativeTo(null);
         setResizable(false);
-
-        // 창 닫기 이벤트 처리 추가... 인데 initTuto에만 넣어도 되는듯? startGame()에서 튜토패널 지운다 해도 이벤트 리스너 스레드는 살아있나보다
-        //addWindowListener(new WindowAdapter() {
-        //    @Override
-        //    public void windowClosing(WindowEvent e) {
-        //        // 현재 게임 창 닫기
-        //        dispose();
-        //
-        //        // 메인 화면 표시
-        //        new JustMiniMain();
-        //    }
-        //});
     }
 
     public void startGame() {
@@ -187,7 +172,7 @@ public class MiniDungeonGame extends JFrame {
         }
     }
 
-    // UI 업데이트 메서드들
+    // UI 업데이트 메소드들
     public void updateRoomName(String roomName) {
         roomNameLabel.setText("Room number: " + roomName + " ");
     }
