@@ -19,31 +19,31 @@
 
 ### Mini Dungeon
 
--   **Adventure Awaits**: Embark on a quest through randomly generated dungeons filled with mischievous goblins and slimes.
+-   **Adventure Awaits**: Embark on a quest through the dungeons filled with mischievous goblins and slimes.
 -   **Unique Enemies**:
     -   **Slimes**: These creatures have a 20% chance to skip their attack, keeping you on your toes.
     -   **Goblins**: Watch out! They might steal your items with a 10% chance.
 -   **Strategic Combat**: Collect items, level up your character, and use tactics to defeat enemies.
 -   **Retro Aesthetics**: Enjoy charming pixel art graphics that bring a nostalgic feel to your adventure.
 
+### Mini Dodge
+
+-   **Reflex Challenge**: Dodge shurikens in a fast-paced environment and aim for high scores.
+-   **Accessible Gameplay**: Suitable for players of all skill levels with its simple yet challenging mechanics.
+
 ### Mini PangPang
 
--   **Cute Puzzles**: Match three jellies in a row to eliminate them and score points.
+-   **Cute Puzzles**: Match three jellies in a row to free them and score points.
 -   **Adorable Jellies**: Delight in the sight of cute and colorful jelly characters.
--   **Brain Teasers**: Challenge your puzzle-solving skills with increasing levels of difficulty.
+-   **Brain Teasers**: Challenge your puzzle-solving skills
 -   **Relaxing Gameplay**: Perfect for when you want a soothing yet engaging puzzle experience.
 
 ### Mini Panda
 
--   **Addictive Action**: Control a running panda as it collects bamboo shoots to gain points.
+-   **Addictive Action**: Control a running panda as it collects bamboo to gain points.
 -   **Simple Controls**: Easy to play but hard to master, offering endless fun.
 -   **Fast-Paced Fun**: Test your reflexes and timing in this action-packed game.
 -   **Charming Visuals**: Enjoy the adorable panda and vibrant environments.
-
-### Mini Dodge
-
--   **Reflex Challenge**: Dodge obstacles in a fast-paced environment and aim for high scores.
--   **Accessible Gameplay**: Suitable for players of all skill levels with its simple yet challenging mechanics.
 
 ## Why Play Just Mini?
 
@@ -51,7 +51,6 @@
 -   **Quick Sessions**: Perfect for short breaks or extended play sessions.
 -   **Endearing Characters**: Fall in love with cute jellies and an adorable panda.
 -   **Addictive Gameplay**: Each game offers its own unique hook to keep you coming back.
--   **Continuous Updates**: Regular additions of new games and features keep the experience fresh.
 
 ## Installation
 
@@ -96,21 +95,20 @@ Or follow these steps:
 -   **Controls**: Use the arrow keys to move your character.
 -   **Objective**: Collect items, defeat enemies, and level up your character.
 -   **Tips**:
-    -   Be cautious of goblins that might steal your items.
+    -   Be cautious of goblins in early stage.
     -   Slimes might skip their attacks, so plan your moves accordingly.
 
 ### Mini PangPang
 
--   **Controls**: Swap adjacent jellies by clicking or tapping on them.
+-   **Controls**: Swap adjacent jellies by clicking on them.
 -   **Objective**: Match three jellies in a row to eliminate them and score points.
 -   **Tips**:
     -   Create combo matches for higher scores.
-    -   Keep an eye out for special jellies with unique effects.
 
 ### Mini Panda
 
--   **Controls**: Use the spacebar or tap the screen to make the panda jump.
--   **Objective**: Collect bamboo shoots while avoiding obstacles.
+-   **Controls**: Use the spacebar to make the panda jump.
+-   **Objective**: Collect bamboo while avoiding obstacles.
 -   **Tips**:
     -   Timing is key; obstacles will come at varying speeds.
     -   The game speeds up over time, increasing the challenge.
@@ -118,9 +116,9 @@ Or follow these steps:
 ### Mini Dodge
 
 -   **Controls**: Use the arrow keys or swipe to move your character.
--   **Objective**: Dodge incoming obstacles and survive as long as possible.
+-   **Objective**: Dodge incoming shurikens and survive as long as possible.
 -   **Tips**:
-    -   Stay alert; obstacles can appear from any direction.
+    -   Stay alert; shurikens can appear from any direction.
     -   Practice makes perfect—improve your reflexes to achieve higher scores.
 
 ## Contributing
@@ -135,7 +133,7 @@ We welcome contributions from the community! If you're interested in improving *
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License.
 
 ----------
 
