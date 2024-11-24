@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.List;
 
 public class MiniPangPang extends JFrame {
-    private static final int GRID_SIZE = 6;
+    static final int GRID_SIZE = 6;
     private static final String[] IMAGE_PATHS = {
             "/images/minipangpang/Jelly_1.png",
             "/images/minipangpang/Jelly_2.png",
@@ -25,7 +25,7 @@ public class MiniPangPang extends JFrame {
     private static final String SMOKE_IMAGE_PATH = "/images/minipangpang/smoke.png";
     private static final int BUTTON_SIZE = 80; // 원하는 버튼 크기로 설정
 
-    private JButton[][] buttons = new JButton[GRID_SIZE][GRID_SIZE];
+    JButton[][] buttons = new JButton[GRID_SIZE][GRID_SIZE];
     private ImageIcon[] icons = new ImageIcon[IMAGE_PATHS.length];
     // private ImageIcon fixedStoneIcon;
     private ImageIcon smokeIcon;

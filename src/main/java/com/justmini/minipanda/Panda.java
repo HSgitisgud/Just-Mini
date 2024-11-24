@@ -1,5 +1,7 @@
 package com.justmini.minipanda;
 
+import com.justmini.util.SoundPlayer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;

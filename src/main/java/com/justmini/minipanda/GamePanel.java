@@ -83,7 +83,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         loadAssets();
 
-        gameTimer = new Timer(16, this); // Approximately 60 FPS
+        gameTimer = new Timer(16, this); // Approximately 60 FPS (1000/16)
     }
 
     private void loadAssets() {
