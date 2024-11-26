@@ -199,9 +199,9 @@ public class MiniPangPang extends JFrame {
         }
 
         if (isMatched) {
-            // 주먹구구식 사운드 재생 미쳤다...
-            // yay 하나만 해시맵에 넣으면 해당 사운드 재생이 완전히 완료되지 않은 상태에서 참조가 일어날 때 frame 0부터 다시 재생하니깐 씹힘.
-            // 그래서 같은 파일을 다른 이름으로 두개 넣었는데 분명히 이것보다 더 좋은 해결책이 있을듯...
+            /*주먹구구식 사운드 재생 미쳤다...
+            yay 하나만 해시맵에 넣으면 해당 사운드 재생이 완전히 완료되지 않은 상태에서 참조가 일어날 때 frame 0부터 다시 재생하니깐 씹힘.
+             그래서 같은 파일을 다른 이름으로 두개 넣었는데 분명히 이것보다 더 좋은 해결책이 있을듯...*/
             SoundPlayer.playSound("/sounds/yay1.wav");
             System.out.println("check for sound1");
             List<JButton> matchedButtons = new ArrayList<>(matchedButtonsSet);
