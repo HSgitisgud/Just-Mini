@@ -54,10 +54,12 @@ public class Panda {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) { // 스페이스 키를 눌렀을 때
             if (!isJumping) { // 팬더가 점프 중이 아니면
+                SoundPlayer.playSound("/sounds/jump.wav");
                 yVelocity = -12; // 첫 번째 점프
                 isJumping = true; // 점프 상태로 변경
                 canDoubleJump = true; // 더블 점프 가능 상태 설정
             } else if (canDoubleJump) { // 더블 점프 가능 상태라면
+                SoundPlayer.playSound("/sounds/jump1.wav");
                 yVelocity = -12; // 더블 점프
                 canDoubleJump = false; // 더블 점프 사용 후 불가능 상태로 변경
             }
