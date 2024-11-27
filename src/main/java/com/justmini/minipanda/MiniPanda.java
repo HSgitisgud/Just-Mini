@@ -47,6 +47,6 @@ public class MiniPanda {
 
     // 선택적인 main 메서드: 게임을 독립적으로 실행할 때 사용
     public static void main(String[] args) {
-        new MiniPanda(); // MiniPanda 인스턴스 생성하여 게임 실행
+        MiniPanda miniPanda = new MiniPanda(); // MiniPanda 인스턴스 생성하여 게임 실행
     }
 }

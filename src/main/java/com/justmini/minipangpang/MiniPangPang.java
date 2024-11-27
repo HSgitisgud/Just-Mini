@@ -55,7 +55,6 @@ public class MiniPangPang extends JFrame {
         setIconImage(icon.getImage());
 
         loadIcons();
-        //loadFixedStoneIcon();
         loadSmokeIcon(); // 연기 이미지 로드
 
         instructionPanel = createInstructionPanel();
@@ -97,15 +96,6 @@ public class MiniPangPang extends JFrame {
         }
     }
 
-//    private void loadFixedStoneIcon() {
-//        try {
-//            fixedStoneIcon = new ImageIcon(getClass().getResource(FIXED_STONE_IMAGE_PATH));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            JOptionPane.showMessageDialog(this, "고정된 돌 이미지를 불러오는 데 실패했습니다.", "오류", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
-
     private void loadSmokeIcon() {
         try {
             URL imageUrl = getClass().getResource(SMOKE_IMAGE_PATH);
@@ -121,10 +111,6 @@ public class MiniPangPang extends JFrame {
             JOptionPane.showMessageDialog(this, "연기 이미지를 불러오는 데 실패했습니다.", "오류", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-//    public ImageIcon getFixedStoneIcon() {
-//        return fixedStoneIcon;
-//    }
 
     // 점수 라벨을 업데이트하는 메서드
     public void updateScoreLabel() {
@@ -208,9 +194,7 @@ public class MiniPangPang extends JFrame {
         }
 
         if (isMatched) {
-            // 주먹구구식 사운드 재생 미쳤다...
-            // yay 하나만 해시맵에 넣으면 해당 사운드 재생이 완전히 완료되지 않은 상태에서 참조가 일어날 때 frame 0부터 다시 재생하니깐 씹힘.
-            // 그래서 같은 파일을 다른 이름으로 두개 넣었는데 분명히 이것보다 더 좋은 해결책이 있을듯...
+            // yay 하나만 해시맵에 넣으면 해당 사운드 재생이 완전히 완료되지 않은 상태에서 참조가 일어날 때 frame 0부터 다시 재생하므로 씹힘
             SoundPlayer.playSound("/sounds/yay1.wav");
             System.out.println("check for sound1");
             List<JButton> matchedButtons = new ArrayList<>(matchedButtonsSet);
@@ -445,26 +429,6 @@ public class MiniPangPang extends JFrame {
         repaint();
     }
 
-    // 게임 난이도를 위해 고정되어 있는 돌 생성
-//    private void initializeFixedStones() {
-//        fixedStonePositions.clear();
-//        int placedStones = 0;
-//
-//        while (placedStones < 3) { // 고정된 돌 3개 설정
-//            int x = (int) (Math.random() * GRID_SIZE);
-//            int y = (int) (Math.random() * GRID_SIZE);
-//            Point stonePosition = new Point(x, y);
-//
-//            // 위치가 고정된 돌 목록에 없고, 3개 연속된 돌이 가로 또는 세로로 배치되지 않는지 확인
-//            if (!fixedStonePositions.contains(stonePosition)) {
-//                fixedStonePositions.add(stonePosition);
-//                buttons[x][y].setIcon(fixedStoneIcon);
-//                buttons[x][y].setEnabled(false);
-//                placedStones++;
-//            }
-//        }
-//    }
-
     // 진행 시간
     private void startTimer() {
         // javax.swing.Timer 사용
@@ -520,9 +484,6 @@ public class MiniPangPang extends JFrame {
             }
         }
 
-        // 고정된 돌 초기화
-        // initializeFixedStones();
-
         // 타이머 새로 시작
         startTimer();
     }
@@ -543,6 +504,6 @@ public class MiniPangPang extends JFrame {
 
     public static void main(String[] args) {
         // UI 초기화 코드
-        new MiniPangPang(); // JFrame 인스턴스 생성
+        MiniPangPang miniPangPang = new MiniPangPang(); // JFrame 인스턴스 생성
     }
 }

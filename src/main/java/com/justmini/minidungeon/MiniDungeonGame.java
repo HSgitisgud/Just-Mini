@@ -26,7 +26,8 @@ public class MiniDungeonGame extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new MiniDungeonGame().setVisible(true);
+            MiniDungeonGame miniDungeon = new MiniDungeonGame();
+            miniDungeon.setVisible(true);
         });
     }
 
